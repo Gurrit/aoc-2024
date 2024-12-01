@@ -7,14 +7,13 @@ import scala.io.{BufferedSource, Source}
 
 object Input {
   def downloadInputFile(day: Int, token: String): Seq[String] = {
-    val year = 2023
+    val year = 2024
     val res = quickRequest
       .header("Cookie", s"session=$token")
       .get(uri"https://adventofcode.com/$year/day/$day/input")
       .send()
 
     if (!res.is200) {
-      println(res)
       throw new Exception(s"Failed to download input for day $day")
     } else {
 
