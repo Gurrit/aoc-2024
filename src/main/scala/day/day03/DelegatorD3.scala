@@ -1,6 +1,6 @@
-package day.day01
+package day.day03
 
-object DelegatorD1 {
+object DelegatorD3 {
 
   def delegate(part: Int, input: Seq[String]): Unit =
     part match {

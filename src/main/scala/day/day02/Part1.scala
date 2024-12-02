@@ -1,6 +1,8 @@
 package day.day02
 
-object Part1 {
+import day.Part
+
+object Part1 extends Part {
 
   def solve(inputs: Seq[String]): Unit = {
     val res = inputs.map { input =>

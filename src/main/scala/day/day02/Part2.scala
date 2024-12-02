@@ -1,51 +1,48 @@
 package day.day02
 
-object Part2 {
+import day.Part
+
+object Part2 extends Part {
 
   def solve(inputs: Seq[String]): Unit = {
     val res = inputs.map { input =>
       val line = input.split(" ").map(_.toInt)
-      val head = line.take(2)
-      val remaining = line.drop(2)
-      val initFailCount = if (isValidSpan(head.head - head.last)) 0 else 1
-      val first: Order = if (head.head > head.last) Dec(head.last, initFailCount) else Inc(head.last, initFailCount)
+      val linePermutations = line.indices.map(i => line.take(i) ++ line.drop(i+1))
 
-      remaining.foldLeft(first) { (last: Order, current: Int) =>
-        isValid(last, current)
+      linePermutations.exists{ line =>
+        val head = line.take(2)
+        val remaining = line.drop(2)
+
+        val first: Order = if (head.head > head.last) Dec(head.last, isValidSpan(head.head - head.last)) else Inc(head.last, isValidSpan(head.head - head.last))
+
+        remaining.foldLeft(first) { (last: Order, current: Int) =>
+          isValid(last, current)
+        }.valid
       }
     }
-    println(res.count(_.fails < 2))
+    println(res.count(a => a))
   }
 
   def isValid(last: Order, current: Int): Order = {
-    if (last.fails > 1) {
+    if (!last.valid)
       last
-    } else {
+    else {
       val diff = current - last.last
-      last match {
-        case Inc(l, fails) =>
-      }
-      if (diff > 0) Inc(current, increaseIfFail(last, diff))
-      else Dec(current, increaseIfFail(last, diff))
+      if (diff > 0) Inc(current, last.isSameSign(diff) && isValidSpan(diff))
+      else Dec(current, last.isSameSign(diff) && isValidSpan(diff))
     }
-  }
-
-  private def increaseIfFail(last: Order, diff: Int): Int = {
-    if (last.isSameSign(diff) && isValidSpan(diff)) last.fails else last.fails + 1
   }
 
   def isValidSpan(diff: Int): Boolean = {
     diff.abs >= 1 && diff.abs <= 3
   }
 
-  abstract case class Order(val last: Int, val fails: Int) {
+  abstract class Order(val last: Int, val valid: Boolean) {
     def isSameSign(diff: Int): Boolean
   }
-  case class Inc(override val last: Int, override val fails: Int) extends Order(last, fails) {
+  case class Inc(override val last: Int, override val valid: Boolean) extends Order(last, valid) {
     override def isSameSign(diff: Int): Boolean = diff > 0
   }
-  case class Dec(override val last: Int, override val fails: Int) extends Order(last, fails) {
+  case class Dec(override val last: Int, override val valid: Boolean) extends Order(last, valid) {
     override def isSameSign(diff: Int): Boolean = diff < 0
-  }
-
-}
+  }}

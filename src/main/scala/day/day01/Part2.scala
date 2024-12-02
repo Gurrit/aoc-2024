@@ -1,8 +1,9 @@
 package day.day01
 
+import day.Part
 import util.InputUtils
 
-object Part2 {
+object Part2 extends Part {
   def solve(inputs: Seq[String]) = {
     val lines = InputUtils.linesInt(inputs)
 
