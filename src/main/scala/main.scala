@@ -1,4 +1,5 @@
-import day.day01.{Part1, Part2}
+import day.day01.DelegatorD1
+import day.day02.{Part1, Part2}
 import tooling.Input
 
 @main
@@ -10,7 +11,8 @@ def main(dayInt: String, partInt: String): Unit = {
 }
 
 def runDay(day: Int, part: Int, input: Seq[String]): Unit = day match {
-  case 1 => Part2.solve(input)
+  case 1 => DelegatorD1.delegator(part, input)
+  case 2 => Part2.solve(input)
   case n: Int => println(s"Not Implemented day $n")
 }
 
