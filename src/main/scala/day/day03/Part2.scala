@@ -2,9 +2,6 @@ package day.day03
 
 import day.Part
 
-import scala.util.chaining.scalaUtilChainingOps
-import scala.util.matching.Regex
-
 object Part2 extends Part {
 
     private val mulRegex: String = """mul\((\d+),(\d+)\)"""
@@ -29,7 +26,4 @@ object Part2 extends Part {
       println(res._1)
 
     }
-
-
-
-  }
+}
