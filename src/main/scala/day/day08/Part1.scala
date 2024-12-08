@@ -1,12 +1,12 @@
 package day.day08
 
 import day.Part
+import util.InputUtils
 
 object Part1 extends Part {
 
   override def solve(input: Seq[String]): Unit = {
-    val a = input.zipWithIndex.flatMap(a => a._1.zipWithIndex.map(b => ((a._2, b._2), b._1)))
-
+    val a = InputUtils.to2DIndexedList(input)
     val g = a.groupBy(_._2).view.mapValues(a => a.map(_._1)).filter(_._1 != '.').toMap
 
     val s = g.flatMap { points =>

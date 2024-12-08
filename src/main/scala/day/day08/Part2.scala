@@ -1,13 +1,13 @@
 package day.day08
 
 import day.Part
+import util.InputUtils
 
 object Part2 extends Part {
 
 
   override def solve(input: Seq[String]): Unit = {
-    val a = input.zipWithIndex.flatMap(a => a._1.zipWithIndex.map(b => ((a._2, b._2), b._1)))
-
+    val a = InputUtils.to2DIndexedList(input)
     val g = a.groupBy(_._2).view.mapValues(a => a.map(_._1)).filter(_._1 != '.').toMap
 
     val s = g.flatMap { points =>
@@ -24,7 +24,6 @@ object Part2 extends Part {
     }.flatten.filter { fl => fl._1 < input.size && fl._1 >= 0 && fl._2 < input(0).size && fl._2 >= 0}
     val b = s.toSeq.sorted.distinct
 
-    println(b)
     println(b.size)
   }
 }

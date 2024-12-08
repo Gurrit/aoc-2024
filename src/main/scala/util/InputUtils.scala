@@ -8,4 +8,7 @@ object InputUtils {
     }.map(s => (s.head.toInt, s.last.toInt))
   }.unzip
   
+  def to2DIndexedList(input: Seq[String]): Seq[((Int, Int), Char)] = 
+    input.zipWithIndex.flatMap(a => a._1.zipWithIndex.map(b => ((a._2, b._2), b._1)))
+  
 }
